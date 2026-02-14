@@ -1,6 +1,5 @@
 // js/api.js
-import { TMDB_API_KEY } from './config.js';
-
+const TMDB_API_KEY = '74fda485b189f4e9e123a96d528664d4'; // ¡NO subas esto a GitHub!
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
 async function fetchTrendingMovies() {
@@ -9,11 +8,11 @@ async function fetchTrendingMovies() {
         const response = await fetch(url);
         const data = await response.json();
         console.log('Películas en tendencia:', data.results);
-        return data.results;
+        return data.results; // Esto será un array de películas
     } catch (error) {
         console.error('Error fetching movies:', error);
-        throw error;
     }
 }
 
+// Para hacerla disponible en otros archivos
 export { fetchTrendingMovies };
