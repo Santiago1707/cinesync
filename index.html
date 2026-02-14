@@ -1,0 +1,44 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineSync - Your Movie Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Aquí luego pondremos Google Fonts -->
+</head>
+
+<body>
+    <header>
+        <h1>CineSync</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="search.html">Search</a>
+            <a href="watchlist.html">My List</a>
+            <a href="login.html">Login</a>
+        </nav>
+        <input type="text" id="search-bar" placeholder="Search for a movie...">
+    </header>
+
+    <main>
+        <section id="trending-section">
+            <h2>Trending This Week</h2>
+            <div id="trending-movies-container" class="movies-grid">
+                <!-- Las películas se insertarán aquí con JavaScript -->
+                <p>Loading trending movies...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made for my Web Dev Project</p>
+    </footer>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
