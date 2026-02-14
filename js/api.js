@@ -12,7 +12,7 @@ async function fetchTrendingMovies() {
         return data.results;
     } catch (error) {
         console.error('Error fetching movies:', error);
-        throw error; // Para que main.js capture el error
+        throw error;
     }
 }
 
