@@ -1,0 +1,47 @@
+<!-- search.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineSync - Search Movies</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1 onclick="window.location.href='index.html'">CineSync</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="search.html" class="active">Search</a>
+            <a href="watchlist.html">My List</a>
+        </nav>
+        <input type="text" id="global-search" placeholder="Search for a movie...">
+    </header>
+
+    <main>
+        <h2>Search Movies</h2>
+
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Type movie title...">
+            <button id="search-btn">Search</button>
+        </div>
+
+        <div id="search-results" class="movies-grid">
+            <p class="search-hint">🔍 Type something and click Search</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 CineSync - Student Project</p>
+    </footer>
+
+    <script type="module" src="js/search.js"></script>
+</body>
+
+</html>

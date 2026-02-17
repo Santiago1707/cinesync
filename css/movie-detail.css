@@ -1,0 +1,180 @@
+/* css/movie-detail.css */
+
+.movie-detail {
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    color: #0f1b2f;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #f0f0f0;
+}
+
+.movie-header {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.movie-poster {
+    flex: 0 0 300px;
+}
+
+.movie-poster img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.movie-info-detailed {
+    flex: 1;
+}
+
+.movie-info-detailed h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #0f1b2f;
+}
+
+.movie-year-runtime {
+    color: #666;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.movie-rating-detailed {
+    font-size: 1.3rem;
+    color: #f5c518;
+    margin-bottom: 1rem;
+}
+
+.movie-genres {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.genre-tag {
+    background-color: #f0f0f0;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.movie-actions-detailed {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.watchlist-btn {
+    background-color: #0f1b2f;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.watchlist-btn:hover {
+    background-color: #f5c518;
+    color: #0f1b2f;
+}
+
+.streaming-section {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.streaming-providers {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.streaming-provider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.streaming-provider img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+}
+
+.movie-plot {
+    line-height: 1.8;
+    color: #333;
+    margin: 2rem 0;
+}
+
+.movie-cast {
+    margin-top: 2rem;
+}
+
+.cast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.cast-member {
+    text-align: center;
+}
+
+.cast-member img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+}
+
+.cast-name {
+    font-weight: 600;
+}
+
+.cast-character {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .movie-header {
+        flex-direction: column;
+    }
+
+    .movie-poster {
+        flex: 0 0 auto;
+        max-width: 250px;
+        margin: 0 auto;
+    }
+
+    .movie-info-detailed h2 {
+        font-size: 2rem;
+    }
+}

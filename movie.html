@@ -1,0 +1,38 @@
+<!-- movie.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineSync - Movie Details</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/movie-detail.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1 onclick="window.location.href='index.html'">CineSync</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="search.html">Search</a>
+            <a href="watchlist.html">My List</a>
+        </nav>
+        <input type="text" id="global-search" placeholder="Search for a movie...">
+    </header>
+
+    <main id="movie-detail-container">
+        <div class="loading">Loading movie details... 🎬</div>
+    </main>
+
+    <footer>
+        <p>© 2024 CineSync - Student Project</p>
+    </footer>
+
+    <script type="module" src="js/movie-detail.js"></script>
+</body>
+
+</html>
