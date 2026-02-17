@@ -158,12 +158,18 @@ async function getStreamingProviders(movieId) {
     }
 
     try {
+        // Usar un proxy CORS público para evitar el error de CORS
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+
         // Paso 1: Buscar el título en Watchmode usando el ID de TMDB
         const searchUrl = `${WATCHMODE_BASE_URL}/search/?apiKey=${WATCHMODE_API_KEY}&search_field=id_tmdb&search_value=${movieId}`;
 
+        // Usar el proxy para la petición
+        const fullSearchUrl = proxyUrl + searchUrl;
+
         console.log(`🔍 Buscando streaming para movie ID: ${movieId}`);
 
-        const searchResponse = await fetch(searchUrl);
+        const searchResponse = await fetch(fullSearchUrl);
 
         if (!searchResponse.ok) {
             console.warn(`⚠️ Watchmode search failed with status: ${searchResponse.status}`);
@@ -178,7 +184,11 @@ async function getStreamingProviders(movieId) {
 
             // Paso 2: Obtener las fuentes (servicios de streaming)
             const sourcesUrl = `${WATCHMODE_BASE_URL}/title/${watchmodeId}/sources/?apiKey=${WATCHMODE_API_KEY}`;
-            const sourcesResponse = await fetch(sourcesUrl);
+
+            // Usar el proxy también para esta petición
+            const fullSourcesUrl = proxyUrl + sourcesUrl;
+
+            const sourcesResponse = await fetch(fullSourcesUrl);
 
             if (!sourcesResponse.ok) {
                 console.warn(`⚠️ Watchmode sources failed with status: ${sourcesResponse.status}`);
@@ -218,14 +228,21 @@ async function getAllProviders(movieId) {
     }
 
     try {
+        // Usar el mismo proxy CORS
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+
         const searchUrl = `${WATCHMODE_BASE_URL}/search/?apiKey=${WATCHMODE_API_KEY}&search_field=id_tmdb&search_value=${movieId}`;
-        const searchResponse = await fetch(searchUrl);
+        const fullSearchUrl = proxyUrl + searchUrl;
+
+        const searchResponse = await fetch(fullSearchUrl);
         const searchData = await searchResponse.json();
 
         if (searchData.title_results && searchData.title_results.length > 0) {
             const watchmodeId = searchData.title_results[0].id;
             const sourcesUrl = `${WATCHMODE_BASE_URL}/title/${watchmodeId}/sources/?apiKey=${WATCHMODE_API_KEY}`;
-            const sourcesResponse = await fetch(sourcesUrl);
+            const fullSourcesUrl = proxyUrl + sourcesUrl;
+
+            const sourcesResponse = await fetch(fullSourcesUrl);
             const sources = await sourcesResponse.json();
 
             // Incluir todos los tipos (subscription, rent, buy)
