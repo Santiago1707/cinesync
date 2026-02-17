@@ -1,4 +1,6 @@
 // js/ui.js
+// Módulo para mostrar películas en la interfaz de usuario
+
 import { getStreamingProviders } from './api.js';
 
 /**
@@ -99,7 +101,63 @@ async function loadStreamingIcons(movies) {
 }
 
 /**
- * Muestra películas en un contenedor
+ * Configura los botones "Add to List"
+ */
+function setupAddButtons() {
+    document.querySelectorAll('.btn-add').forEach(button => {
+        button.addEventListener('click', async (event) => {
+            event.stopPropagation(); // Evita que se active el click de la tarjeta
+
+            const movieId = button.dataset.id;
+            const movieTitle = button.dataset.title;
+
+            // Importar dinámicamente watchlist.js
+            try {
+                const { addToWatchlist, isInWatchlist } = await import('./watchlist.js');
+
+                // Crear objeto simple de película
+                const movie = {
+                    id: parseInt(movieId),
+                    title: movieTitle,
+                    poster_path: null,
+                };
+
+                if (addToWatchlist(movie)) {
+                    // Cambiar el botón temporalmente para feedback
+                    const originalText = button.textContent;
+                    button.textContent = '✓ Added!';
+                    button.style.backgroundColor = '#28a745';
+
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.backgroundColor = '';
+                    }, 1500);
+                } else {
+                    // Ya estaba en la lista
+                    button.textContent = 'Already in list';
+                    button.style.backgroundColor = '#6c757d';
+
+                    setTimeout(() => {
+                        button.textContent = '+ Add to List';
+                        button.style.backgroundColor = '';
+                    }, 1500);
+                }
+            } catch (error) {
+                console.error('Error importing watchlist module:', error);
+                button.textContent = 'Error!';
+                button.style.backgroundColor = '#dc3545';
+
+                setTimeout(() => {
+                    button.textContent = '+ Add to List';
+                    button.style.backgroundColor = '';
+                }, 1500);
+            }
+        });
+    });
+}
+
+/**
+ * MUESTRA PELÍCULAS EN UN CONTENEDOR (UNA SOLA VERSIÓN)
  * @param {Array} movies - Array de películas
  * @param {string} containerId - ID del contenedor
  */
@@ -122,81 +180,10 @@ async function displayMovies(movies, containerId) {
 
     // Luego cargar los íconos de streaming
     await loadStreamingIcons(movies);
-}
 
-// Exportar funciones
-export { displayMovies, createMovieCard, loadStreamingIcons };
-
-/**
- * Configura los botones "Add to List"
- * Se llama después de displayMovies
- */
-function setupAddButtons() {
-    document.querySelectorAll('.btn-add').forEach(button => {
-        button.addEventListener('click', async (event) => {
-            event.stopPropagation(); // Evita que se active el click de la tarjeta
-
-            const movieId = button.dataset.id;
-            const movieTitle = button.dataset.title;
-
-            // Importar dinámicamente watchlist.js
-            const { addToWatchlist, isInWatchlist } = await import('./watchlist.js');
-
-            // Crear objeto simple de película
-            const movie = {
-                id: parseInt(movieId),
-                title: movieTitle,
-                poster_path: null, // Podrías obtener más datos si quieres
-            };
-
-            if (addToWatchlist(movie)) {
-                // Cambiar el botón temporalmente para feedback
-                const originalText = button.textContent;
-                button.textContent = '✓ Added!';
-                button.style.backgroundColor = '#28a745';
-
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.backgroundColor = '';
-                }, 1500);
-            } else {
-                // Ya estaba en la lista
-                button.textContent = 'Already in list';
-                button.style.backgroundColor = '#6c757d';
-
-                setTimeout(() => {
-                    button.textContent = '+ Add to List';
-                    button.style.backgroundColor = '';
-                }, 1500);
-            }
-        });
-    });
-}
-
-// Actualiza displayMovies para llamar a setupAddButtons
-async function displayMovies(movies, containerId) {
-    const container = document.getElementById(containerId);
-
-    if (!container) {
-        console.error(`Container #${containerId} not found`);
-        return;
-    }
-
-    if (!movies || movies.length === 0) {
-        container.innerHTML = '<p class="no-results">No movies found</p>';
-        return;
-    }
-
-    // Mostrar las tarjetas
-    const moviesHTML = movies.map(movie => createMovieCard(movie)).join('');
-    container.innerHTML = moviesHTML;
-
-    // Cargar íconos de streaming
-    await loadStreamingIcons(movies);
-
-    // Configurar botones
+    // Finalmente configurar los botones
     setupAddButtons();
 }
 
-// Actualiza los exports al final del archivo
+// Exportar funciones
 export { displayMovies, createMovieCard, loadStreamingIcons, setupAddButtons };
