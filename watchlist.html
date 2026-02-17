@@ -1,0 +1,42 @@
+<!-- watchlist.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineSync - My Watchlist</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>CineSync</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="search.html">Search</a>
+            <a href="watchlist.html">My List</a>
+            <a href="login.html">Login</a>
+        </nav>
+        <input type="text" id="search-bar" placeholder="Search for a movie...">
+    </header>
+
+    <main>
+        <h2>My Watchlist</h2>
+        <div id="watchlist-container" class="movies-grid">
+            <p class="loading">Loading your watchlist...</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>Made for my Web Dev Project</p>
+    </footer>
+
+    <script type="module" src="js/watchlist-page.js"></script>
+</body>
+
+</html>
