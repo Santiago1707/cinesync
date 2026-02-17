@@ -1,4 +1,5 @@
 // js/ui.js
+import { getStreamingProviders } from './api.js';
 
 /**
  * Crea el HTML para una tarjeta de película
@@ -7,17 +8,14 @@
  */
 function createMovieCard(movie) {
     // Verificar si la película tiene poster (imagen)
-    // movie.poster_path viene de la API, si es null no hay imagen
     const hasPoster = movie.poster_path !== null && movie.poster_path !== undefined;
 
     let posterHTML;
 
     if (hasPoster) {
-        // CASO 1: SÍ hay poster - mostrar la imagen de TMDB
         const posterPath = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
         posterHTML = `<img src="${posterPath}" alt="${movie.title}" loading="lazy">`;
     } else {
-        // CASO 2: NO hay poster - mostrar placeholder de color con el título
         posterHTML = `
             <div class="no-poster-placeholder">
                 🎬 ${movie.title}
@@ -25,7 +23,7 @@ function createMovieCard(movie) {
         `;
     }
 
-    // Título truncado si es muy largo (más de 25 caracteres)
+    // Título truncado si es muy largo
     const title = movie.title.length > 25
         ? movie.title.substring(0, 25) + '...'
         : movie.title;
@@ -48,6 +46,10 @@ function createMovieCard(movie) {
                     <span class="movie-year">${year}</span>
                     <span class="movie-rating">⭐ ${rating}</span>
                 </div>
+                <div class="streaming-icons" id="streaming-${movie.id}">
+                    <!-- Los íconos se cargarán después -->
+                    <span class="loading-icons">⌛</span>
+                </div>
                 <div class="movie-actions">
                     <button class="btn-add" data-id="${movie.id}" data-title="${movie.title}">
                         + Add to List
@@ -59,11 +61,49 @@ function createMovieCard(movie) {
 }
 
 /**
+ * Carga los íconos de streaming para cada película
+ * @param {Array} movies - Array de películas
+ */
+async function loadStreamingIcons(movies) {
+    for (const movie of movies) {
+        try {
+            const providers = await getStreamingProviders(movie.id);
+            const iconsContainer = document.getElementById(`streaming-${movie.id}`);
+
+            if (iconsContainer) {
+                if (providers && providers.length > 0) {
+                    // Mostrar íconos de los primeros 3 providers
+                    iconsContainer.innerHTML = providers.slice(0, 3).map(provider => {
+                        // Usar el logo de Watchmode o un placeholder
+                        const logoUrl = provider.image_url || `https://via.placeholder.com/30/0f1b2f/f5c518?text=${provider.name.charAt(0)}`;
+                        return `
+                            <img src="${logoUrl}" 
+                                 alt="${provider.name}" 
+                                 class="streaming-icon"
+                                 title="${provider.name}">
+                        `;
+                    }).join('');
+                } else {
+                    // No hay providers disponibles
+                    iconsContainer.innerHTML = '<span class="no-streaming">📺</span>';
+                }
+            }
+        } catch (error) {
+            console.error(`Error loading streaming icons for movie ${movie.id}:`, error);
+            const iconsContainer = document.getElementById(`streaming-${movie.id}`);
+            if (iconsContainer) {
+                iconsContainer.innerHTML = '<span class="no-streaming">❌</span>';
+            }
+        }
+    }
+}
+
+/**
  * Muestra películas en un contenedor
  * @param {Array} movies - Array de películas
- * @param {string} containerId - ID del contenedor (ej. 'trending-movies-container')
+ * @param {string} containerId - ID del contenedor
  */
-function displayMovies(movies, containerId) {
+async function displayMovies(movies, containerId) {
     const container = document.getElementById(containerId);
 
     if (!container) {
@@ -76,10 +116,13 @@ function displayMovies(movies, containerId) {
         return;
     }
 
-    // Convertir cada película a HTML y unirlas
-    const moviesHTML = movies.map(createMovieCard).join('');
+    // Mostrar las tarjetas primero
+    const moviesHTML = movies.map(movie => createMovieCard(movie)).join('');
     container.innerHTML = moviesHTML;
+
+    // Luego cargar los íconos de streaming
+    await loadStreamingIcons(movies);
 }
 
-// Exportar funciones para usar en otros archivos
-export { displayMovies, createMovieCard };
+// Exportar funciones
+export { displayMovies, createMovieCard, loadStreamingIcons };
