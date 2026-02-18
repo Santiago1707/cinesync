@@ -8,8 +8,6 @@
     <title>CineSync - Your Movie Hub</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- index.html - dentro de <head> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -19,7 +17,7 @@
 
 <body>
     <header>
-        <h1>CineSync</h1>
+        <h1 onclick="window.location.href='index.html'">CineSync</h1> <!-- Agregamos onclick -->
         <nav>
             <a href="index.html">Home</a>
             <a href="search.html">Search</a>
@@ -32,14 +30,16 @@
         <section id="trending-section">
             <h2>Trending This Week</h2>
             <div id="trending-movies-container" class="movies-grid">
-                <!-- Las películas se insertarán aquí con JavaScript -->
-                <p>Loading trending movies...</p>
+                <div style="grid-column: 1/-1; text-align: center;">
+                    <div class="spinner"></div>
+                    <p class="loading">Loading amazing movies... 🎬</p>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>Made for my Web Dev Project</p>
+        <p>© 2026 CineSync - Student Project</p>
     </footer>
 
     <script type="module" src="js/main.js"></script>

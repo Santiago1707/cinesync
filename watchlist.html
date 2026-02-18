@@ -15,24 +15,29 @@
 
 <body>
     <header>
-        <h1>CineSync</h1>
+        <h1 onclick="window.location.href='index.html'">CineSync</h1> <!-- Agregamos onclick -->
         <nav>
             <a href="index.html">Home</a>
             <a href="search.html">Search</a>
-            <a href="watchlist.html">My List</a>
+            <a href="watchlist.html" class="active">My List</a> <!-- Marcamos como activo -->
             <a href="login.html">Login</a>
         </nav>
     </header>
 
     <main>
-        <h2>My Watchlist</h2>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h2>My Watchlist</h2>
+            <button id="clear-watchlist-btn"
+                style="padding: 0.5rem 1rem; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">Clear
+                All</button>
+        </div>
         <div id="watchlist-container" class="movies-grid">
             <p class="loading">Loading your watchlist...</p>
         </div>
     </main>
 
     <footer>
-        <p>Made for my Web Dev Project</p>
+        <p>© 2024 CineSync - Student Project</p>
     </footer>
 
     <script type="module" src="js/watchlist-page.js"></script>

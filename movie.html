@@ -8,6 +8,7 @@
     <title>CineSync - Movie Details</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/movie-detail.css">
+    <link rel="stylesheet" href="css/animations.css"> <!-- Agregamos animations.css -->
     <link
         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;600;700&display=swap"
         rel="stylesheet">
@@ -20,12 +21,16 @@
             <a href="index.html">Home</a>
             <a href="search.html">Search</a>
             <a href="watchlist.html">My List</a>
+            <a href="login.html">Login</a> <!-- Agregamos Login -->
         </nav>
-        <input type="text" id="global-search" placeholder="Search for a movie...">
+        <!-- QUITAMOS global-search para mantener consistencia -->
     </header>
 
     <main id="movie-detail-container">
-        <div class="loading">Loading movie details... 🎬</div>
+        <div style="text-align: center; padding: 3rem;">
+            <div class="spinner"></div>
+            <p class="loading">Loading movie details... 🎬</p>
+        </div>
     </main>
 
     <footer>

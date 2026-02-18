@@ -1,14 +1,12 @@
-// js/search.js
+// js/search.js - CORREGIDO
 import { searchMovies } from './api.js';
 import { displayMovies } from './ui.js';
 
-// Elementos del DOM
 const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-btn');
-const globalSearch = document.getElementById('global-search');
+const globalSearch = document.getElementById('global-search'); // Puede ser null
 const resultsContainer = document.getElementById('search-results');
 
-// Función para realizar búsqueda
 async function performSearch(query) {
     if (!query || query.trim() === '') {
         resultsContainer.innerHTML = '<p class="search-hint">🔍 Type something and click Search</p>';
@@ -17,7 +15,6 @@ async function performSearch(query) {
 
     try {
         resultsContainer.innerHTML = '<p class="loading">Searching for movies... 🎬</p>';
-
         const results = await searchMovies(query);
 
         if (results.length === 0) {
@@ -32,24 +29,25 @@ async function performSearch(query) {
 }
 
 // Event listeners
-searchBtn.addEventListener('click', () => {
-    performSearch(searchInput.value);
-});
+if (searchBtn) {
+    searchBtn.addEventListener('click', () => performSearch(searchInput.value));
+}
 
-searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        performSearch(searchInput.value);
-    }
-});
+if (searchInput) {
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') performSearch(searchInput.value);
+    });
+}
 
-// Búsqueda global (header)
-globalSearch.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && globalSearch.value.trim() !== '') {
-        window.location.href = `search.html?q=${encodeURIComponent(globalSearch.value)}`;
-    }
-});
+// ⚠️ IMPORTANTE: Verificar si globalSearch existe antes de usarlo
+if (globalSearch) {
+    globalSearch.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && globalSearch.value.trim() !== '') {
+            window.location.href = `search.html?q=${encodeURIComponent(globalSearch.value)}`;
+        }
+    });
+}
 
-// Cargar búsqueda desde URL (si viene de global search)
 const urlParams = new URLSearchParams(window.location.search);
 const queryParam = urlParams.get('q');
 if (queryParam) {
