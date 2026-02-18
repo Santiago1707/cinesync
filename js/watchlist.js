@@ -62,7 +62,7 @@ export function addToWatchlist(movie) {
 }
 
 /**
- * Elimina una película de la watchlist
+ * Elimina una película de la watchlist (INDIVIDUAL)
  * @param {number} movieId - ID de la película
  * @returns {boolean} - true si se eliminó
  */
@@ -73,7 +73,7 @@ export function removeFromWatchlist(movieId) {
     if (filtered.length !== watchlist.length) {
         saveWatchlist(filtered);
 
-        // Disparar evento
+        // Disparar evento para actualizar otras pestañas
         window.dispatchEvent(new Event('watchlistUpdated'));
 
         return true;

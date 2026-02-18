@@ -5,12 +5,12 @@ import { getStreamingProviders } from './api.js';
 
 /**
  * Crea el HTML para una tarjeta de película
- * @param {Object} movie - Datos de la película de TMDB
- * @param {boolean} showAddButton - Si debe mostrar el botón "Add to List"
+ * @param {Object} movie - Datos de la película
+ * @param {boolean} showAddButton - Si debe mostrar botón "Add to List"
+ * @param {boolean} showRemoveButton - Si debe mostrar botón "Remove"
  * @returns {string} HTML de la tarjeta
  */
-function createMovieCard(movie, showAddButton = true) {
-    // Verificar si la película tiene poster
+function createMovieCard(movie, showAddButton = true, showRemoveButton = false) {
     const hasPoster = movie.poster_path !== null && movie.poster_path !== undefined;
 
     let posterHTML;
@@ -26,27 +26,38 @@ function createMovieCard(movie, showAddButton = true) {
         `;
     }
 
-    // Título truncado si es muy largo
     const title = movie.title?.length > 25
         ? movie.title.substring(0, 25) + '...'
         : movie.title || 'Unknown Title';
 
-    // Año de estreno
     const year = movie.release_date
         ? new Date(movie.release_date).getFullYear()
         : 'N/A';
 
-    // Calificación
     const rating = movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A';
 
-    // Botón Add to List (solo si showAddButton es true)
-    const addButtonHTML = showAddButton
-        ? `<div class="movie-actions">
+    // Botones
+    let buttonsHTML = '';
+
+    if (showAddButton) {
+        buttonsHTML += `
+            <div class="movie-actions">
                 <button class="btn-add" data-id="${movie.id}" data-title="${movie.title}">
                     + Add to List
                 </button>
-            </div>`
-        : '';
+            </div>
+        `;
+    }
+
+    if (showRemoveButton) {
+        buttonsHTML += `
+            <div class="movie-actions">
+                <button class="btn-remove" data-id="${movie.id}" data-title="${movie.title}">
+                    ✕ Remove
+                </button>
+            </div>
+        `;
+    }
 
     return `
         <div class="movie-card" data-id="${movie.id}" onclick="window.location.href='movie.html?id=${movie.id}'">
@@ -60,7 +71,7 @@ function createMovieCard(movie, showAddButton = true) {
                 <div class="streaming-icons" id="streaming-${movie.id}">
                     <span class="loading-icons">⌛</span>
                 </div>
-                ${addButtonHTML}
+                ${buttonsHTML}
             </div>
         </div>
     `;
@@ -68,7 +79,6 @@ function createMovieCard(movie, showAddButton = true) {
 
 /**
  * Carga los íconos de streaming para cada película
- * @param {Array} movies - Array de películas
  */
 async function loadStreamingIcons(movies) {
     if (!movies || movies.length === 0) return;
@@ -91,11 +101,10 @@ async function loadStreamingIcons(movies) {
                         `;
                     }).join('');
                 } else {
-                    iconsContainer.innerHTML = '<span class="no-streaming" title="Streaming info not available with free plan">📺</span>';
+                    iconsContainer.innerHTML = '<span class="no-streaming" title="Streaming info not available">📺</span>';
                 }
             }
         } catch (error) {
-            console.log(`Streaming info not available for movie ${movie.id}`);
             const iconsContainer = document.getElementById(`streaming-${movie.id}`);
             if (iconsContainer) {
                 iconsContainer.innerHTML = '<span class="no-streaming">📺</span>';
@@ -111,7 +120,6 @@ async function loadStreamingIcons(movies) {
  */
 function setupAddButtons() {
     document.querySelectorAll('.btn-add').forEach(button => {
-        // Remover listeners anteriores para evitar duplicados
         const newButton = button.cloneNode(true);
         button.parentNode.replaceChild(newButton, button);
 
@@ -127,17 +135,15 @@ function setupAddButtons() {
                 const movie = {
                     id: parseInt(movieId),
                     title: movieTitle,
-                    poster_path: null,
-                    date_added: new Date().toISOString()
+                    poster_path: null
                 };
 
                 if (addToWatchlist(movie)) {
-                    const originalText = newButton.textContent;
                     newButton.textContent = '✓ Added!';
                     newButton.style.backgroundColor = '#28a745';
 
                     setTimeout(() => {
-                        newButton.textContent = originalText;
+                        newButton.textContent = '+ Add to List';
                         newButton.style.backgroundColor = '';
                     }, 1500);
                 } else {
@@ -150,7 +156,7 @@ function setupAddButtons() {
                     }, 1500);
                 }
             } catch (error) {
-                console.error('Error adding to watchlist:', error);
+                console.error('Error:', error);
                 newButton.textContent = 'Error!';
                 newButton.style.backgroundColor = '#dc3545';
 
@@ -165,11 +171,8 @@ function setupAddButtons() {
 
 /**
  * Muestra películas en un contenedor
- * @param {Array} movies - Array de películas
- * @param {string} containerId - ID del contenedor
- * @param {Object} options - Opciones adicionales
  */
-async function displayMovies(movies, containerId, options = { showAddButton: true }) {
+export async function displayMovies(movies, containerId, options = { showAddButton: true, showRemoveButton: false }) {
     const container = document.getElementById(containerId);
 
     if (!container) {
@@ -182,24 +185,22 @@ async function displayMovies(movies, containerId, options = { showAddButton: tru
         return;
     }
 
-    // Guardar la posición del scroll
     const scrollPosition = window.scrollY;
 
-    // Mostrar las tarjetas
-    const moviesHTML = movies.map(movie => createMovieCard(movie, options.showAddButton)).join('');
+    // Mostrar tarjetas con opciones
+    const moviesHTML = movies.map(movie =>
+        createMovieCard(movie, options.showAddButton, options.showRemoveButton)
+    ).join('');
+
     container.innerHTML = moviesHTML;
 
-    // Cargar íconos de streaming
     await loadStreamingIcons(movies);
 
-    // Configurar botones SOLO si showAddButton es true
     if (options.showAddButton) {
         setupAddButtons();
     }
 
-    // Restaurar scroll
     window.scrollTo(0, scrollPosition);
 }
 
-// Exportar funciones
-export { displayMovies, createMovieCard, loadStreamingIcons, setupAddButtons };
+export { createMovieCard, loadStreamingIcons };

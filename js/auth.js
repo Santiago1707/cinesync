@@ -45,7 +45,7 @@ function saveUsers(users) {
  * @param {string} name - Nombre del usuario
  * @returns {Object} Resultado de la operación
  */
-function registerUser(email, password, name = '') {
+export function registerUser(email, password, name = '') {
     // Validaciones
     if (!email || !password) {
         return {
@@ -83,7 +83,7 @@ function registerUser(email, password, name = '') {
     const newUser = {
         id: Date.now(),
         email,
-        password, // En producción, esto debería estar encriptado
+        password,
         name: name || email.split('@')[0],
         createdAt: new Date().toISOString(),
         watchlist: []
@@ -105,7 +105,7 @@ function registerUser(email, password, name = '') {
  * @param {string} password - Contraseña
  * @returns {Object} Resultado de la operación
  */
-function loginUser(email, password) {
+export function loginUser(email, password) {
     if (!email || !password) {
         return {
             success: false,
@@ -143,7 +143,7 @@ function loginUser(email, password) {
 /**
  * Cierra sesión del usuario actual
  */
-function logoutUser() {
+export function logoutUser() {
     localStorage.removeItem(CURRENT_USER_KEY);
     return {
         success: true,
@@ -155,7 +155,7 @@ function logoutUser() {
  * Obtiene el usuario actualmente logueado
  * @returns {Object|null} Usuario actual o null
  */
-function getCurrentUser() {
+export function getCurrentUser() {
     try {
         const user = localStorage.getItem(CURRENT_USER_KEY);
         return user ? JSON.parse(user) : null;
@@ -166,17 +166,26 @@ function getCurrentUser() {
 }
 
 /**
+ * Obtiene el nombre del usuario actual
+ * @returns {string} Nombre del usuario o 'Guest'
+ */
+export function getCurrentUserName() {
+    const user = getCurrentUser();
+    return user ? user.name : 'Guest';
+}
+
+/**
  * Verifica si hay un usuario logueado
  * @returns {boolean}
  */
-function isLoggedIn() {
+export function isLoggedIn() {
     return getCurrentUser() !== null;
 }
 
 /**
  * Crea un usuario de demostración
  */
-function createDemoUser() {
+export function createDemoUser() {
     const demoEmail = 'demo@cinesync.com';
     const demoPassword = 'demo123';
 
@@ -187,16 +196,3 @@ function createDemoUser() {
 
     return { email: demoEmail, password: demoPassword };
 }
-
-// ============================================
-// EXPORTACIONES
-// ============================================
-
-export {
-    registerUser,
-    loginUser,
-    logoutUser,
-    getCurrentUser,
-    isLoggedIn,
-    createDemoUser
-};

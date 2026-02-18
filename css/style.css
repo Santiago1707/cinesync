@@ -594,3 +594,63 @@ input:focus-visible {
     outline: 3px solid var(--accent-gold);
     outline-offset: 2px;
 }
+
+
+/* Botón Remove en watchlist */
+.btn-remove {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s;
+    margin-top: 0.5rem;
+}
+
+.btn-remove:hover {
+    background-color: #c82333;
+    transform: scale(1.02);
+}
+
+.btn-remove:active {
+    transform: scale(0.98);
+}
+
+/* Botón Logout */
+#logout-btn {
+    background-color: transparent;
+    color: white;
+    border: 1px solid #dc3545;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    margin-left: 1rem;
+}
+
+#logout-btn:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Header con logout */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-info {
+    color: white;
+    font-size: 0.9rem;
+}
+
+.user-info span {
+    color: #f5c518;
+    font-weight: bold;
+}
