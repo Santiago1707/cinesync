@@ -1,0 +1,499 @@
+/* css/animations.css */
+/* Animaciones para CineSync */
+
+/* ============================================
+   ANIMACIONES DE ENTRADA
+   ============================================ */
+
+/* Fade In */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Slide Up */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-up {
+    animation: slideUp 0.5s ease-out;
+}
+
+/* Slide In Left */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+/* Slide In Right */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.5s ease-out;
+}
+
+/* Scale In */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.scale-in {
+    animation: scaleIn 0.3s ease-out;
+}
+
+/* ============================================
+   ANIMACIONES DE CARGA
+   ============================================ */
+
+/* Pulse */
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+
+    100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+}
+
+.pulse {
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Spinner */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #f5c518;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+/* Loading Dots */
+@keyframes dots {
+
+    0%,
+    20% {
+        content: '.';
+    }
+
+    40% {
+        content: '..';
+    }
+
+    60%,
+    100% {
+        content: '...';
+    }
+}
+
+.loading-dots::after {
+    content: '...';
+    animation: dots 1.5s infinite;
+    display: inline-block;
+    width: 24px;
+}
+
+/* Shimmer Effect */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+}
+
+/* ============================================
+   ANIMACIONES DE HOVER
+   ============================================ */
+
+/* Hover Scale */
+.hover-scale {
+    transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* Hover Lift */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Hover Glow */
+.hover-glow {
+    transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 15px rgba(245, 197, 24, 0.5);
+}
+
+/* ============================================
+   ANIMACIONES DE TRANSICIÓN
+   ============================================ */
+
+/* Fade Transition */
+.fade-enter {
+    opacity: 0;
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Slide Transition */
+.slide-enter {
+    transform: translateX(100%);
+}
+
+.slide-enter-active {
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+}
+
+.slide-exit {
+    transform: translateX(0);
+}
+
+.slide-exit-active {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+/* ============================================
+   ANIMACIONES DE PELÍCULAS
+   ============================================ */
+
+/* Movie Card Hover */
+.movie-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.movie-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+}
+
+.movie-card:hover img {
+    transform: scale(1.05);
+}
+
+.movie-card img {
+    transition: transform 0.5s ease;
+}
+
+/* Streaming Icon Hover */
+.streaming-icon {
+    transition: all 0.2s ease;
+}
+
+.streaming-icon:hover {
+    transform: scale(1.2) rotate(5deg);
+}
+
+/* Button Click Animation */
+.btn-add:active,
+.watchlist-btn:active,
+#search-btn:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+}
+
+/* ============================================
+   ANIMACIONES DE ENTRADA POR STAGGER
+   ============================================ */
+
+/* Stagger para grid de películas */
+.movie-card {
+    animation: slideUp 0.5s ease forwards;
+    opacity: 0;
+}
+
+.movie-card:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.movie-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.movie-card:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.movie-card:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.movie-card:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+.movie-card:nth-child(6) {
+    animation-delay: 0.3s;
+}
+
+.movie-card:nth-child(7) {
+    animation-delay: 0.35s;
+}
+
+.movie-card:nth-child(8) {
+    animation-delay: 0.4s;
+}
+
+.movie-card:nth-child(9) {
+    animation-delay: 0.45s;
+}
+
+.movie-card:nth-child(10) {
+    animation-delay: 0.5s;
+}
+
+.movie-card:nth-child(11) {
+    animation-delay: 0.55s;
+}
+
+.movie-card:nth-child(12) {
+    animation-delay: 0.6s;
+}
+
+.movie-card:nth-child(13) {
+    animation-delay: 0.65s;
+}
+
+.movie-card:nth-child(14) {
+    animation-delay: 0.7s;
+}
+
+.movie-card:nth-child(15) {
+    animation-delay: 0.75s;
+}
+
+.movie-card:nth-child(16) {
+    animation-delay: 0.8s;
+}
+
+.movie-card:nth-child(17) {
+    animation-delay: 0.85s;
+}
+
+.movie-card:nth-child(18) {
+    animation-delay: 0.9s;
+}
+
+.movie-card:nth-child(19) {
+    animation-delay: 0.95s;
+}
+
+.movie-card:nth-child(20) {
+    animation-delay: 1s;
+}
+
+/* ============================================
+   ANIMACIONES DE NOTIFICACIÓN
+   ============================================ */
+
+/* Toast / Notification */
+@keyframes slideInDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutUp {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+.notification {
+    animation: slideInDown 0.3s ease;
+}
+
+.notification.hide {
+    animation: slideOutUp 0.3s ease forwards;
+}
+
+/* ============================================
+   ANIMACIONES DE PÁGINA
+   ============================================ */
+
+/* Page Transition */
+.page-enter {
+    animation: fadeIn 0.5s ease;
+}
+
+/* Header Shrink on Scroll */
+@keyframes headerShrink {
+    from {
+        padding: 1rem 2rem;
+    }
+
+    to {
+        padding: 0.5rem 2rem;
+    }
+}
+
+.header-shrink {
+    animation: headerShrink 0.3s ease forwards;
+}
+
+/* ============================================
+   ANIMACIONES DE ERROR
+   ============================================ */
+
+/* Shake for errors */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-5px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(5px);
+    }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* ============================================
+   MEDIA QUERIES PARA REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .movie-card,
+    .movie-card:hover,
+    .spinner,
+    .pulse {
+        animation: none !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}

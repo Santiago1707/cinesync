@@ -1,12 +1,12 @@
-<!-- login.html -->
+<!-- register.html -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineSync - Login</title>
-    <meta name="description" content="Login to your CineSync account">
+    <title>CineSync - Register</title>
+    <meta name="description" content="Create your CineSync account">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
@@ -28,19 +28,24 @@
             <a href="index.html">Home</a>
             <a href="search.html">Search</a>
             <a href="watchlist.html">My List</a>
-            <a href="login.html" class="active">Login</a>
+            <a href="login.html">Login</a>
         </nav>
     </header>
 
     <main class="auth-main">
         <div class="auth-container slide-up">
             <div class="auth-header">
-                <h2>Welcome Back! 👋</h2>
-                <p>Login to manage your watchlist</p>
+                <h2>Create Account ✨</h2>
+                <p>Join CineSync to save your favorite movies</p>
             </div>
 
-            <!-- Login Form -->
-            <form id="login-form" class="auth-form">
+            <!-- Register Form -->
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name">
+                </div>
+
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" placeholder="Enter your email" required>
@@ -48,33 +53,32 @@
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <input type="password" id="password" name="password" placeholder="Create a password" required>
+                    <small class="form-text">Minimum 6 characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password"
+                        placeholder="Confirm your password" required>
                 </div>
 
                 <div class="form-options">
                     <label class="checkbox-container">
-                        <input type="checkbox" id="remember">
+                        <input type="checkbox" id="terms" required>
                         <span class="checkmark"></span>
-                        Remember me
+                        I agree to the <a href="#" class="terms-link">Terms of Service</a>
                     </label>
-                    <a href="#" class="forgot-link">Forgot password?</a>
                 </div>
 
-                <button type="submit" id="login-btn" class="auth-btn">
-                    <span class="btn-text">Login</span>
+                <button type="submit" id="register-btn" class="auth-btn">
+                    <span class="btn-text">Create Account</span>
                     <span class="btn-loader" style="display: none;"></span>
                 </button>
             </form>
 
-            <!-- Demo Credentials -->
-            <div class="demo-credentials">
-                <p><strong>Demo Credentials:</strong></p>
-                <p>Email: demo@cinesync.com</p>
-                <p>Password: demo123</p>
-            </div>
-
             <div class="auth-footer">
-                <p>Don't have an account? <a href="register.html" class="auth-link">Sign up</a></p>
+                <p>Already have an account? <a href="login.html" class="auth-link">Login</a></p>
             </div>
         </div>
     </main>
@@ -83,7 +87,7 @@
         <p>© 2024 CineSync - Student Project</p>
     </footer>
 
-    <script type="module" src="js/login.js"></script>
+    <script type="module" src="js/register.js"></script>
 </body>
 
 </html>
