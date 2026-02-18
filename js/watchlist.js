@@ -1,24 +1,32 @@
 // js/watchlist.js
 // Módulo para manejar la lista de películas del usuario
 
-// Clave para localStorage
 const STORAGE_KEY = 'cinesync_watchlist';
 
 /**
  * Obtiene la watchlist del localStorage
  * @returns {Array} Array de películas guardadas
  */
-function getWatchlist() {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
+export function getWatchlist() {
+    try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+        console.error('Error reading watchlist:', error);
+        return [];
+    }
 }
 
 /**
  * Guarda la watchlist en localStorage
  * @param {Array} watchlist - Array de películas
  */
-function saveWatchlist(watchlist) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(watchlist));
+export function saveWatchlist(watchlist) {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(watchlist));
+    } catch (error) {
+        console.error('Error saving watchlist:', error);
+    }
 }
 
 /**
@@ -26,25 +34,28 @@ function saveWatchlist(watchlist) {
  * @param {Object} movie - Película a agregar
  * @returns {boolean} - true si se agregó, false si ya existía
  */
-function addToWatchlist(movie) {
-    const watchlist = getWatchlist();
+export function addToWatchlist(movie) {
+    if (!movie || !movie.id) return false;
 
-    // Verificar si ya existe
+    const watchlist = getWatchlist();
     const exists = watchlist.some(m => m.id === movie.id);
 
     if (!exists) {
-        // Crear objeto simplificado para guardar
         const movieToSave = {
             id: movie.id,
             title: movie.title,
-            poster_path: movie.poster_path,
-            release_date: movie.release_date,
-            vote_average: movie.vote_average,
+            poster_path: movie.poster_path || null,
+            release_date: movie.release_date || null,
+            vote_average: movie.vote_average || 0,
             date_added: new Date().toISOString()
         };
 
         watchlist.push(movieToSave);
         saveWatchlist(watchlist);
+
+        // Disparar evento para actualizar otras pestañas
+        window.dispatchEvent(new Event('watchlistUpdated'));
+
         return true;
     }
     return false;
@@ -55,12 +66,16 @@ function addToWatchlist(movie) {
  * @param {number} movieId - ID de la película
  * @returns {boolean} - true si se eliminó
  */
-function removeFromWatchlist(movieId) {
+export function removeFromWatchlist(movieId) {
     const watchlist = getWatchlist();
     const filtered = watchlist.filter(m => m.id !== movieId);
 
     if (filtered.length !== watchlist.length) {
         saveWatchlist(filtered);
+
+        // Disparar evento
+        window.dispatchEvent(new Event('watchlistUpdated'));
+
         return true;
     }
     return false;
@@ -71,15 +86,20 @@ function removeFromWatchlist(movieId) {
  * @param {number} movieId - ID de la película
  * @returns {boolean}
  */
-function isInWatchlist(movieId) {
+export function isInWatchlist(movieId) {
     const watchlist = getWatchlist();
     return watchlist.some(m => m.id === movieId);
 }
 
-// Exportar funciones
-export {
-    getWatchlist,
-    addToWatchlist,
-    removeFromWatchlist,
-    isInWatchlist
-};
+/**
+ * Limpia toda la watchlist
+ * @returns {boolean}
+ */
+export function clearWatchlist() {
+    localStorage.removeItem(STORAGE_KEY);
+
+    // Disparar evento para actualizar otras pestañas
+    window.dispatchEvent(new Event('watchlistUpdated'));
+
+    return true;
+}

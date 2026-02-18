@@ -34,7 +34,7 @@ async function initHomePage() {
             return;
         }
 
-        // Mostrar las películas (esto también carga los íconos de streaming)
+        // Mostrar las películas
         await displayMovies(movies, 'trending-movies-container');
 
         console.log(`✅ Homepage loaded with ${movies.length} movies`);
@@ -57,12 +57,6 @@ async function initHomePage() {
 }
 
 // Ejecutar cuando el DOM esté listo
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHomePage);
-} else {
-    // DOM ya está cargado
-    initHomePage();
-}
+document.addEventListener('DOMContentLoaded', initHomePage);
 
-// Exportar para uso en otros archivos si es necesario
 export { initHomePage };
